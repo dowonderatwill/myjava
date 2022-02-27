@@ -15,8 +15,8 @@ public class testmain {
 		
 		Instant ref = Instant.now();
 				
-		int SIZE = 90_000; 
-//		int SIZE = 10; 
+//		int SIZE = 90_000; 
+		int SIZE = 10; 
 		
 		System.out.println("Size of Node:"+SIZE);
 		Random rd = new Random();
@@ -25,7 +25,7 @@ public class testmain {
 		
 		ref = Instant.now();
 		while(tset.size() < SIZE) {
-			tset.add(100+rd.nextInt());
+			tset.add(100+rd.nextInt(SIZE*10));
 		}
 		
 		LogTime.printTime(ref, "TimeInFillTreeSet");
@@ -37,7 +37,7 @@ public class testmain {
 		Node r = Node.buildTree(a);
 		LogTime.printTime(ref, "TimeInBuildBST");
 		
-//		LogTime.printTree("", r);
+		LogTime.printTree("", r);
 		System.out.println("------------");
 		
 //		Node.inorderWalk(r);
@@ -55,6 +55,12 @@ public class testmain {
 		ref = Instant.now();
 		System.out.println(Node.get(a[SIZE-2], r));
 		LogTime.printTime(ref, "time for get");
+		
+		Node n = Node.get(a[6], r);
+		if(null == n) System.out.println(" Node not found!"+n.k);
+	
+		System.out.printf("nearset successor of %d is %d ", n.k, 
+				Node.getNearestSuccessor(n).k);
 	}
 	
 	static class Node{
@@ -115,27 +121,27 @@ public class testmain {
 			}
 			
 		}
-		
-		static int get(int k, Node n) {
-			int i = -1;
+
+		// if not found then return null;	
+		static Node get(int k, Node n) {
 
 			if(k == n.k) {
-				return 1;
+				return n;
 			}
 			
 			if ( k < n.k) {
 				if(null != n.l) {
 					
-					i = get(k,n.l);
+					return  get(k,n.l);
 				}
 			}else {
 				if(null != n.r) {
 					
-					i = get(k,n.r);
+					return get(k,n.r);
 				}
 			}
 			
-			return i;
+			return null;
 		}
 		
 		static void inorderWalk(Node r) {
@@ -162,6 +168,32 @@ public class testmain {
 			}
 			c.setC(rh);
 		}
+		
+		static Node getMinInSubTree(Node n) {
+			while (null != n.l) n = n.l;
+			return n  ;
+		}
+
+		static Node getMaxInSubTree(Node n) {
+			while(null!=n.r) n =n.r;
+			return n;
+		}
+		
+		static Node getNearestSuccessor(Node n) {
+			System.out.println("In getNearesetSuccessor"+n.k);
+			if(null!=n.r) return getMinInSubTree(n.r);
+			
+			Node y = n.p;
+			Node x = n;
+			
+			while (null!=y && x != y.l) {
+				x = y;
+				y = y.p;
+			}
+			
+			return y;
+		}
+	
 	}
 	
 	class counter{
