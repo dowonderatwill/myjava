@@ -56,11 +56,12 @@ public class testmain {
 		System.out.println(Node.get(a[SIZE-2], r));
 		LogTime.printTime(ref, "time for get");
 		
-		Node n = Node.get(a[6], r);
+		Node n = Node.get(a[4], r);
 		if(null == n) System.out.println(" Node not found!"+n.k);
 	
-		System.out.printf("nearset successor of %d is %d ", n.k, 
-				Node.getNearestSuccessor(n).k);
+		System.out.printf("nearset successor of %d is %d and nearest predecessor is %d ", n.k, 
+				Node.getNearestSuccessor(n).k,
+				Node.getNearestPredecessor(n).k);
 	}
 	
 	static class Node{
@@ -178,9 +179,9 @@ public class testmain {
 			while(null!=n.r) n =n.r;
 			return n;
 		}
-		
+
 		static Node getNearestSuccessor(Node n) {
-			System.out.println("In getNearesetSuccessor"+n.k);
+
 			if(null!=n.r) return getMinInSubTree(n.r);
 			
 			Node y = n.p;
@@ -194,6 +195,18 @@ public class testmain {
 			return y;
 		}
 	
+		static Node getNearestPredecessor(Node n) {
+			if(null!=n.l) return getMaxInSubTree(n.l);
+			Node x = n;
+			Node y = n.p;
+			
+			while (null != y && x != y.r ) {
+				x = y;
+				y = y.p;
+			}
+			return y;
+			
+		}
 	}
 	
 	class counter{
