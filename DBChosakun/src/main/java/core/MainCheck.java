@@ -35,7 +35,7 @@ public class MainCheck {
 		
 		Queries qs = new Queries();
 		qs.executeAllQueries(c);
-		
+
 		NiceQueryResultOutput o ;
 		String otype = AppProperties.getProperties().getProperty("qry.save.type");
 		if("html".equals(otype))
@@ -43,7 +43,7 @@ public class MainCheck {
 		else
 			o = new QueryOutputResultsCsv(qs);
 		
-		o.saveResultInAFile("Check_");
+		o.saveResultInAFile("Checked_"+c.getMetaData());
 		
 		c.close();
 	}

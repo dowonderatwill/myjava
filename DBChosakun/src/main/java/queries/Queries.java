@@ -33,8 +33,8 @@ public class Queries {
 	}  
 
 
-	HashMap<String,List<ArrayList<String>>> allq = new HashMap<String,List<ArrayList<String>>>();
-	HashMap<String,List<String>> colnames = new HashMap<String, List<String>>();
+	HashMap<String,List<ArrayList<String>>> allq 	= new HashMap<String,List<ArrayList<String>>>();
+	HashMap<String,List<String>> colnames 			= new HashMap<String, List<String>>();
 	public void executeAllQueries(Connection conn) throws SQLException {
 		Properties p = AppProperties.getProperties();
 		String v = p.getProperty("qry.count");
@@ -42,8 +42,8 @@ public class Queries {
 				
 		for(int i=1;i<=sz;i++) {
 			String k = "qry."+i;
-			String q = p.getProperty(k); if(null==q || q.trim() == null) continue;
-			List<String> colnameslist = getColNames(q); if(null==colnameslist) continue;
+			String q = p.getProperty(k); if(null==q || q.trim() == null) continue; System.out.println("Queries.java query from prop:"+q);
+			List<String> colnameslist = getColNames(q); if(null==colnameslist) continue; 
 			colnames.put(k,colnameslist);
 			int c = Integer.parseInt(p.getProperty(k+".columns"));
 			allq.put(k, executeSimpleQuery(q, c, conn));
