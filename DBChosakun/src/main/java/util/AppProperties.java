@@ -17,9 +17,9 @@ public class AppProperties {
 	
 	static {
 		InputStream is = null;
-//		is = AppProperties.class.getClassLoader().getResourceAsStream("config.properties");
+//		is = AppProperties.class.getClassLoader().getResourceAsStream("config.properties"); //for local testing.
 
-		try { is = new FileInputStream("./config/config.properties"); } catch (FileNotFoundException e1) {System.out.println("File config.properties not found.");	}
+		try { is = new FileInputStream("./config/config.properties"); } catch (FileNotFoundException e1) {System.out.println("File ./config/config.properties not found.");	}
 
 		p = new Properties();
 		try {
