@@ -59,7 +59,7 @@ public class AppProperties {
 		String line =null;
 		try { 
 			while( (  line=br.readLine() )!=null)
-				if(line.indexOf("--")!=0)	sb.append(line); 
+				if(line.indexOf("--")!=0)	sb.append(line+" "); //20221125: as the next line was getting appended with the last word of prev. line. so added space. 
 		} catch (IOException e) {System.out.println("problem in reading line from "+fn);}
 		
 		return sb.toString();
