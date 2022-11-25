@@ -1,6 +1,6 @@
 20220914
 To compile:
-java clean compile assembly:single
+mvn clean compile assembly:single
 
 To run:
 change the config.properties for connection parameters and DB Schema.
