@@ -1,3 +1,14 @@
+// An efficient algorithm for searching occurrences of a pattern within a text.
+// Compute the array using Pi function,  
+//an array that represents the length of the longest proper prefix which is also a suffix for each prefix of a given string.
+/*
+The prefix function for a string s is an array π, 
+where π[i] is the length of the longest proper prefix of the substring s[0...i]
+which is also a suffix of this substring. 
+Proper prefix of a string is a prefix that is not equal to the string itself.
+It is obvious that π[0]=0 because a string of length 1 has no proper prefixes
+*/
+
 public static int[] getPi(char[] s) {
 	int sz = s.length;
 	int[] pi = new int[sz];
