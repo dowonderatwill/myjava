@@ -51,10 +51,13 @@ class DCLoadBalancer {
     
     public int addApplication(int appId, int loadUse) {
     	
-    	Integer pm = q.poll();if(null==pm) return -1;
+    	Integer pm = q.peek();
+    	if(null==pm) return -1;
     	Integer cc = activeMachines.get(pm);
     	
-    	if(loadUse> cc) return -1;
+    	if(loadUse> cc) 
+    		return -1;
+    	q.poll();
     	cc-=loadUse;
     	
     	activeMachines.put(pm, cc);
@@ -81,6 +84,7 @@ class DCLoadBalancer {
     	
     	Integer mc = activeMachines.get(machine);
     	mc += load;
+    	activeMachines.put(machine, mc);
     	q.remove(machine);
     	q.add(machine);
     	appToMachnies.remove(appId);
@@ -117,20 +121,38 @@ class DCLoadBalancer {
      */
      public static void main(String[] args) {
     	 
-    			  
-		/*
+    	/*		  
+		
     	 String[] inst = {"addMachine","addMachine","addMachine", "addMachine",
     			 "addApplication","addApplication","addApplication","addApplication",
     			 "getApplications",
-    			 "addMachine","addApplication","stopApplication","addApplication","getApplications","removeMachine","getApplications"};
+    			 "addMachine",
+    			 "addApplication","stopApplication","addApplication","getApplications","removeMachine","getApplications"};
     	 int[][] params ={ {1,1},{2,10},{3,10},{4,15},
     			 {1,3},{2,11},{3,6},{4,5},
     			 {2},
-    			 {5,10},{5,5},{3},{6,5},{4},{4},{2}};
+    			 {5,10},
+    			 {5,5},{3},{6,5},{4},{4},{2}};
     	 */
+    	 /*
+    	  [null,null,null,null,4,4,2,3,[3],null,5,null,2,[1,2],null,[6,1]]
+    	  [null,null,null,null,4,4,2,3,[3],null,5,null,3,
+    	  */
+    	 
+    	 /*
     	 String[] inst = {"addMachine","getApplications","addMachine","getApplications","getApplications","removeMachine","getApplications","addMachine","getApplications","getApplications","addMachine","removeMachine","addApplication","addMachine","removeMachine","getApplications","getApplications","addApplication","addMachine","addMachine","getApplications","getApplications","getApplications","addApplication","removeMachine","removeMachine","removeMachine","addApplication","getApplications","removeMachine","addMachine","addApplication","getApplications","removeMachine","addMachine","getApplications","getApplications","addMachine","removeMachine","addMachine","addApplication","getApplications","getApplications","getApplications","getApplications","getApplications","getApplications","getApplications","getApplications","removeMachine","getApplications","addApplication","getApplications","getApplications","addApplication","addMachine","addApplication","getApplications","getApplications"};
     	 int[][] params = {{12264,47135},{12264},{23997,34056},{12264},{12264},{12264},{23997},{98265,54003},{23997},{98265},{54533,71366},{98265},{78014,8255},{43462,85258},{54533},{23997},{43462},{92855,18342},{87711,47893},{15946,54614},{43462},{87711},{87711},{81574,91970},{23997},{87711},{15946},{95319,30396},{43462},{43462},{37053,57590},{42444,41923},{37053},{37053},{99424,56702},{99424},{99424},{23317,9135},{99424},{55754,74790},{96466,15626},{55754},{23317},{23317},{23317},{55754},{23317},{55754},{55754},{55754},{23317},{84463,77320},{23317},{23317},{21655,29544},{49468,56127},{50191,1576},{23317},{23317}};
 		 //*/
+    	 
+    	 /* */
+    	 
+    	 String[] inst = {"addMachine", 	"getApplications",	"addApplication",	"getApplications",	"addApplication",	"getApplications"};
+		 int[][] params ={{73314,38096},	{73314},			{73811,46083},		{73314},			{89187,25213},		{73314}};
+    	 
+		 // 			[null,				[],					-1,					[],					73314,				[89187]]
+    	 // */
+    	 
+    	 
     	 DCLoadBalancer dc = new DCLoadBalancer();
     			 
     	 int i=0;
